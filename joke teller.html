@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joke Teller</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-color: #236dff;
+}
+
+.container {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2rem;
+  color: #070707;
+  margin-bottom: 20px;
+}
+
+.joke-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  background-color: #00d30b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #007e2a;
+}
+
+#joke {
+  font-size: 1.1rem;
+  color: #070707;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Joke Teller</h1>
+    <div class="joke-box">
+      <p id="joke">Press the button to hear a joke!</p>
+    </div>
+    <button id="joke-btn">Tell Me a Joke</button>
+  </div>
+
+  <script>
+    const jokeBtn = document.getElementById('joke-btn');
+const jokeText = document.getElementById('joke');
+
+
+async function getJoke() {
+  const apiUrl = 'https://v2.jokeapi.dev/joke/Any';
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    let joke = '';
+    if (data.type === 'twopart') {
+      joke = `${data.setup} ... ${data.delivery}`;
+    } else {
+      joke = data.joke;
+    }
+    
+    jokeText.innerText = joke;
+    
+    tellJoke(joke);
+  } catch (error) {
+    console.error('Error fetching the joke:', error);
+  }
+}
+
+
+function tellJoke(joke) {
+  const speech = new SpeechSynthesisUtterance(joke);
+  speech.pitch = 1;
+  speech.rate = 1;
+  speechSynthesis.speak(speech);
+}
+
+jokeBtn.addEventListener('click', getJoke);
+
+  </script>
+</body>
+</html>

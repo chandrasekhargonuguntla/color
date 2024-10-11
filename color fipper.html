@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Flipper</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #74fd3e;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+span {
+  font-weight: bold;
+  color: #61dafb;
+}
+
+button {
+  background-color: #fc24df;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: hsl(305, 97%, 24%);
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Color Flipper</h1>
+    <p>Background Color: <span id="color">#ffffff</span></p>
+    <button id="btn">Flip Color</button>
+  </div>
+
+  <script>
+
+const btn = document.getElementById('btn');
+const colorText = document.getElementById('color');
+const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33A1', '#33FFF3', '#8F33FF'];
+
+function getRandomNumber(max) {
+  return Math.floor(Math.random() * max);
+}
+function getRandomHexColor() {
+  const hexChars = '0123456789ABCDEF';
+  let hexColor = '#';
+  for (let i = 0; i < 6; i++) {
+    hexColor += hexChars[getRandomNumber(16)];
+  }
+  return hexColor;
+}
+
+ btn.addEventListener('click', () => {
+  const randomColor = getRandomHexColor();
+  document.body.style.backgroundColor = randomColor;
+  colorText.textContent = randomColor;
+});
+
+  </script>
+</body>
+</html>
